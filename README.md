@@ -7,6 +7,17 @@ Aufgaben. React/TypeScript-Frontend, aufgebaut auf der gemeinsamen `carbide-ui`-
 Kuratierte Auswahl aus einem privaten, aktiven Repository (94 Commits) — Ausschnitte,
 kein vollständiger Quellcode.
 
+## Screenshots
+
+![Rooms-Übersicht](screenshots/rooms-overview.png)
+*Alle Raumtypen auf einen Blick: Kultivierung, Mutterpflanzen, Vermehrung, Trocknung — jeweils mit Live-Sollwerten pro Bank/Rack.*
+
+![Raum-Detail](screenshots/room-detail.png)
+*Detailansicht eines Kultivierungsraums: Chargen-Tabelle, Bank-Detail mit Pflanzenliste, Klimaverlauf und Raum-Journal.*
+
+![SOP-Bibliothek](screenshots/sop-library.png)
+*Durchsuchbare Standardarbeitsanweisungen (SOPs), versioniert und nach Thema sortiert.*
+
 ## Enthaltene Ausschnitte
 
 | Datei | Zeigt |
@@ -25,7 +36,3 @@ Komponente, die dieselbe `Room`-Basis und dieselben `carbide-ui`-Bausteine (Data
 Charts) nutzt, statt Fachlogik zu duplizieren. Die UI-Bibliothek (`carbide-ui`) und diese
 App teilen sich damit denselben Werkzeugkasten — ein Grund, warum ich sie als eigenes
 Package ausgelagert habe statt sie in jeder App neu zu bauen.
-
-## Screenshots
-
-Folgen als Ergänzung — die Live-Ansicht läuft aktuell nur lokal auf meinem Rechner.
