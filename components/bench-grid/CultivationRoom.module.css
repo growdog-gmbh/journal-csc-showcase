@@ -1,0 +1,373 @@
+.cultivationRoom {
+    /* Component tokens: only this component (and its benches, gauges and
+       footer) reads these, so a re-skin never has to chase raw Carbide
+       primitives through the whole tree. */
+    --cultivation-room-brand: var(--app-brand);
+    --cultivation-room-highlight: var(--carbide-signal-warning);
+    --cultivation-room-status-ok: var(--carbide-signal-ok);
+    --cultivation-room-status-warning: var(--carbide-signal-warning);
+    --cultivation-room-status-critical: var(--carbide-signal-alarm);
+    /* Stage and photoperiod are the two facts a grower reads first, so
+       they get their own hues rather than the neutral text color: flower
+       in the warm yellow, vegetation in green, light hours in yellow. */
+    --cultivation-room-flower: var(--carbide-signal-warning);
+    --cultivation-room-vegetation: var(--carbide-signal-ok);
+    --cultivation-room-light: var(--cultivation-room-highlight);
+    /* Hairlines and surfaces are translucent tints of the text color, so they
+       sit naturally on the glass panel in both themes. */
+    --cultivation-room-line: var(--app-hairline);
+    --cultivation-room-line-strong: var(--app-hairline-strong);
+    --cultivation-room-surface: var(--app-tint);
+    --cultivation-room-surface-hover: var(--app-tint-hover);
+
+    /* Inline-size container only: the header's status line adapts to the
+       widget's width below, and inline containment leaves the height
+       calculation of the grid rows untouched. */
+    container-type: inline-size;
+    container-name: room;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+/* ---- header ---------------------------------------------------------- */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--carbide-sp-6);
+    /* One 12px inset on every side of the panel: the name on the left, the
+       last stat's own padding on the right (4 + 8), and 16px of air above
+       and below the header line (widget padding + 4 above, 15 + 1px line
+       below, then the grid's 16). */
+    padding: var(--carbide-sp-2) var(--carbide-sp-2) 15px var(--carbide-sp-4);
+    border-bottom: 1px solid var(--cultivation-room-line);
+}
+
+.identity {
+    display: flex;
+    flex-direction: column;
+    gap: var(--carbide-sp-1);
+    min-width: 0;
+}
+
+.roomName {
+    overflow: hidden;
+    color: var(--cultivation-room-brand);
+    font-family: var(--carbide-font-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: var(--carbide-tracking-heading);
+    line-height: 1.2;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.roomMeta {
+    display: flex;
+    gap: var(--carbide-sp-4);
+    color: var(--carbide-text-2);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: var(--carbide-tracking-label);
+    white-space: nowrap;
+}
+
+.roomMeta > * + * {
+    padding-left: var(--carbide-sp-4);
+    border-left: 1px solid var(--cultivation-room-line);
+}
+
+.num {
+    color: var(--carbide-text);
+    font-family: var(--carbide-font-mono);
+    font-weight: 600;
+}
+
+.roomMeta .num {
+    color: var(--cultivation-room-highlight);
+}
+
+.stats {
+    display: flex;
+    align-items: stretch;
+    flex: none;
+}
+
+.stat {
+    /* Native button for keyboard reach; visually it is just a text block. */
+    appearance: none;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--carbide-sp-1);
+    padding: var(--carbide-sp-2) var(--carbide-sp-5);
+    text-align: center;
+    cursor: pointer;
+    transition: background-color var(--carbide-duration-fast-1) var(--carbide-ease-standard);
+}
+
+.stat:last-child {
+    padding-right: var(--carbide-sp-3);
+}
+
+.stat:hover,
+.stat:focus-visible {
+    background: var(--cultivation-room-surface-hover);
+}
+
+.stat + .stat {
+    border-left: 1px solid var(--cultivation-room-line);
+}
+
+.statLabel {
+    color: var(--carbide-text-2);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: var(--carbide-tracking-caps);
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.statValue {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: var(--carbide-sp-2);
+    width: 100%;
+    color: var(--carbide-text);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.statValue .num {
+    font-size: 17px;
+}
+
+.statIcon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    display: inline-flex;
+    transform: translateY(-50%);
+    color: var(--carbide-text-2);
+}
+
+.statIcon[data-tone="ok"] {
+    color: var(--cultivation-room-status-ok);
+}
+
+.statIcon[data-tone="warning"] {
+    color: var(--cultivation-room-status-warning);
+}
+
+.stageWord {
+    font-weight: 700;
+    letter-spacing: var(--carbide-tracking-label);
+}
+
+.stageWord[data-stage="flower"] {
+    color: var(--cultivation-room-flower);
+}
+
+.stageWord[data-stage="vegetation"] {
+    color: var(--cultivation-room-vegetation);
+}
+
+.lightHours {
+    color: var(--cultivation-room-light);
+    font-family: var(--carbide-font-mono);
+    font-weight: 600;
+}
+
+.statValue .lightHours {
+    font-size: 17px;
+}
+
+.statUnit {
+    color: var(--carbide-text-2);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Narrow widget: the eyebrow labels go, the icons carry the meaning, and
+   everything closes ranks so the four readings still fit next to the name. */
+@container room (max-width: 760px) {
+    .roomName {
+        font-size: 19px;
+    }
+
+    .stat {
+        padding: var(--carbide-sp-2) var(--carbide-sp-4);
+    }
+
+    .statLabel {
+        display: none;
+    }
+
+    .statValue {
+        font-size: 15px;
+    }
+
+    .statValue .num {
+        font-size: 16px;
+    }
+}
+
+/* ---- popovers -------------------------------------------------------- */
+
+/* Popovers are always opaque -- the glass treatment stops at the panel.
+   Popover's own .content is already opaque; this guarantees it even if
+   that background token ever changes. */
+.popover {
+    width: 232px;
+    background: var(--carbide-layer-1);
+}
+
+.popoverHead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--carbide-sp-4);
+    padding-bottom: var(--carbide-sp-3);
+    margin-bottom: var(--carbide-sp-3);
+    border-bottom: 1px solid var(--cultivation-room-line);
+}
+
+.popoverTitle {
+    color: var(--carbide-text);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: var(--carbide-tracking-label);
+}
+
+.popoverAside {
+    color: var(--carbide-text-2);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: var(--carbide-tracking-label);
+}
+
+.popoverAside .num {
+    color: var(--carbide-text-2);
+}
+
+/* Headline reading (stage progress, light schedule, ...) followed by a
+   muted supporting line. */
+.popoverValue {
+    display: flex;
+    align-items: baseline;
+    gap: var(--carbide-sp-2);
+    color: var(--carbide-text);
+    font-family: var(--carbide-font-mono);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.popoverValueMuted {
+    color: var(--carbide-text-2);
+    font-weight: 500;
+}
+
+.popoverValueUnit {
+    color: var(--carbide-text-2);
+    font-family: var(--carbide-font-sans);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Green regardless of which stage: it marks days added on top of the
+   plan, not a stage-specific status. The reason lives in the batch's own
+   history, not in this at-a-glance popover. */
+.stageExtension {
+    margin-left: auto;
+    color: var(--cultivation-room-status-ok);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.progress {
+    position: relative;
+    height: 6px;
+    margin: var(--carbide-sp-4) 0 var(--carbide-sp-3);
+    background: color-mix(in oklab, var(--carbide-text) 10%, transparent);
+}
+
+.progressFill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: var(--cultivation-room-status-ok);
+}
+
+.popoverDetail {
+    color: var(--carbide-text-2);
+    font-size: 11.5px;
+    font-variant-numeric: tabular-nums;
+}
+
+.popoverRows {
+    display: flex;
+    flex-direction: column;
+}
+
+.popoverRow {
+    display: flex;
+    align-items: center;
+    gap: var(--carbide-sp-3);
+    padding: var(--carbide-sp-3) 0;
+    color: var(--carbide-text-2);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: var(--carbide-tracking-label);
+}
+
+.popoverRow + .popoverRow {
+    border-top: 1px solid var(--cultivation-room-line);
+}
+
+.popoverRow .num {
+    min-width: 3ch;
+    font-size: 15px;
+    text-align: right;
+}
+
+.popoverRowIcon {
+    display: inline-flex;
+    color: var(--carbide-text-2);
+}
+
+.popoverRowIcon[data-tone="ok"] {
+    color: var(--cultivation-room-status-ok);
+}
+
+.popoverRowIcon[data-tone="warning"] {
+    color: var(--cultivation-room-status-warning);
+}
+
+/* ---- body and footer ------------------------------------------------- */
+
+/* Cards sit on the same 12px inset as the header text; 16px above and
+   below match the air around the header line. */
+.body {
+    min-height: 0;
+    padding: var(--carbide-sp-5) var(--carbide-sp-4);
+}
+
+/* 12px between the line and the readings, 12px (the widget's own
+   padding) between the readings and the panel's edge. */
+.footer {
+    padding-top: var(--carbide-sp-4);
+    border-top: 1px solid var(--cultivation-room-line);
+}

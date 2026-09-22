@@ -1,0 +1,126 @@
+/* Same tokens as the panels; the head copies the room tile's header so the
+   page reads as one family with the dashboard. */
+.panel {
+    --rooms-line: var(--app-hairline);
+    --rooms-line-strong: var(--app-hairline-strong);
+    --rooms-surface: var(--app-tint);
+    --rooms-surface-hover: var(--app-tint-hover);
+    --rooms-selected: var(--app-tint-selected);
+    --rooms-brand: var(--app-brand);
+    --rooms-highlight: var(--carbide-signal-warning);
+    --rooms-status-ok: var(--carbide-signal-ok);
+    --rooms-status-warning: var(--carbide-signal-warning);
+    --rooms-status-critical: var(--carbide-signal-alarm);
+
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--carbide-sp-6);
+    padding: var(--carbide-sp-2) var(--carbide-sp-2) var(--carbide-sp-3) var(--carbide-sp-4);
+    border-bottom: 1px solid var(--rooms-line);
+}
+
+.identity {
+    display: flex;
+    flex-direction: column;
+    gap: var(--carbide-sp-1);
+    min-width: 0;
+}
+
+.roomName {
+    overflow: hidden;
+    color: var(--rooms-brand);
+    font-family: var(--carbide-font-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: var(--carbide-tracking-heading);
+    line-height: 1.2;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.roomMeta {
+    display: flex;
+    gap: var(--carbide-sp-4);
+    color: var(--carbide-text-2);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: var(--carbide-tracking-label);
+    white-space: nowrap;
+}
+
+.roomMeta > * + * {
+    padding-left: var(--carbide-sp-4);
+    border-left: 1px solid var(--rooms-line);
+}
+
+.roomMeta .num {
+    color: var(--rooms-highlight);
+}
+
+.num {
+    color: var(--carbide-text);
+    font-family: var(--carbide-font-mono);
+    font-weight: 600;
+}
+
+.stats {
+    display: flex;
+    align-items: stretch;
+    flex: none;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--carbide-sp-1);
+    padding: var(--carbide-sp-2) var(--carbide-sp-5);
+    text-align: center;
+}
+
+.stat + .stat {
+    border-left: 1px solid var(--rooms-line);
+}
+
+.statLabel {
+    color: var(--carbide-text-2);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: var(--carbide-tracking-caps);
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.statValue {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: var(--carbide-sp-2);
+    color: var(--carbide-text);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.statMuted {
+    color: var(--carbide-text-2);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: var(--carbide-tracking-label);
+}
+
+.light {
+    color: var(--rooms-highlight);
+    font-family: var(--carbide-font-mono);
+    font-weight: 600;
+}

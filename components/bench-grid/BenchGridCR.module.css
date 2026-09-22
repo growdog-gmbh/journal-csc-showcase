@@ -1,0 +1,24 @@
+/* Size container so the grid below can express its tile cap in cqw/cqh. */
+.viewport {
+    container-type: size;
+    height: 100%;
+    width: 100%;
+}
+
+/* Tracks grow to fill the room but never past the size a tile has in the
+   2x2 layout -- one lone bench must not balloon into a billboard. With a
+   cap in place the grid centres itself in the leftover space. */
+.benchGrid {
+    --gap: var(--carbide-sp-4);
+    --tile-max-w: calc((100cqw - var(--gap)) / 2);
+    --tile-max-h: calc((100cqh - var(--gap)) / 2);
+
+    height: 100%;
+    width: 100%;
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: repeat(var(--cols), minmax(0, var(--tile-max-w)));
+    grid-template-rows: repeat(var(--rows), minmax(0, var(--tile-max-h)));
+    justify-content: center;
+    align-content: center;
+}
