@@ -29,10 +29,14 @@ kein vollständiger Quellcode.
 | `pages/rooms/RoomTable.tsx` (+ CSS Module) | Tabellarische Übersicht einer Charge mit Live-Messwerten (Blatttemperatur, VPD, Warnungen) |
 | `pages/rooms/RoomDashboard.tsx` | Dashboard-Zusammenstellung pro Raum (Kennzahlen, Trend, Journal, Aufgaben) |
 
-## Architektur-Idee
+## Warum so gebaut
 
 Jeder Raumtyp (Kultivierung, Mutterpflanzen, Vermehrung, Trocknung) ist eine eigene
 Komponente, die dieselbe `Room`-Basis und dieselben `carbide-ui`-Bausteine (DataGrid,
 Charts) nutzt, statt Fachlogik zu duplizieren. Die UI-Bibliothek (`carbide-ui`) und diese
 App teilen sich damit denselben Werkzeugkasten — ein Grund, warum ich sie als eigenes
 Package ausgelagert habe statt sie in jeder App neu zu bauen.
+
+Der Effekt ist direkt sichtbar: Ein Bugfix an `DataGrid` (z. B. in der Sortierung der
+Bank-Tabelle) landet automatisch auch in `growdog`, ohne dort etwas anfassen zu müssen —
+weil beide dieselbe Komponente aus `carbide-ui` einbinden, keine eigene Kopie.
